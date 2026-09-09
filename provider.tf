@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.63"
+    }
+  }
+  required_version = ">= 1.10"
+}
+provider "aws" {
+  region = "eu-north-1"
+
+  default_tags {
+    tags = {
+      Project     = "retail-store"
+      ManagedBy   = "terraform"
+      Environment = var.environment_name
+    }
+  }
+}
