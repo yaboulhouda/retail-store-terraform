@@ -14,4 +14,5 @@ resource "aws_db_instance" "rds" {
   db_subnet_group_name        = var.db_subnet_group_name
   multi_az                    = false
   storage_encrypted           = true
+  identifier                  = var.identifier
 }

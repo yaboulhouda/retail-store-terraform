@@ -39,3 +39,8 @@ variable "vpc_security_group_ids" {
 variable "port" {
   type = number
 }
+
+variable "identifier" {
+  description = "Identifiant unique de l'instance RDS"
+  type        = string
+}
