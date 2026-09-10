@@ -1,0 +1,14 @@
+# .github/workflows/test-oidc.yml
+name: test-oidc
+on: workflow_dispatch
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: eu-north-1
+          role-to-assume: arn:aws:iam::745838912158:role/does-not-exist-yet
