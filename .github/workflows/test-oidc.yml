@@ -8,7 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: eu-north-1
-          role-to-assume: arn:aws:iam::745838912158:role/does-not-exist-yet
+      - name: Decode OIDC token
+        run: |
+          TOKEN=$(curl -sLS "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
+          echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq .
