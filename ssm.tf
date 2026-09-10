@@ -46,15 +46,8 @@ resource "aws_ssm_parameter" "catalog-dbname" {
   value = module.catalog-mysql.db_name
 }
 
-
-resource "aws_ssm_parameter" "redis-host" {
-  name  = "/retail-store/${var.environment_name}/checkout/redis-host"
+resource "aws_ssm_parameter" "redis-url" {
+  name  = "/retail-store/${var.environment_name}/checkout/redis-url"
   type  = "String"
-  value = aws_elasticache_replication_group.checkout.primary_endpoint_address
-}
-
-resource "aws_ssm_parameter" "redis-port" {
-  name  = "/retail-store/${var.environment_name}/checkout/redis-port"
-  type  = "String"
-  value = aws_elasticache_replication_group.checkout.port
+  value = "redis://${aws_elasticache_replication_group.checkout.primary_endpoint_address}:${aws_elasticache_replication_group.checkout.port}"
 }
