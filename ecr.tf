@@ -1,8 +1,8 @@
 module "ecr" {
-  source          = "terraform-aws-modules/ecr/aws"
-  for_each        = toset(var.services)
-  repository_name = "${var.ecr_name}/${each.key}"
-
+  source                            = "terraform-aws-modules/ecr/aws"
+  for_each                          = toset(var.services)
+  repository_name                   = "${var.ecr_name}/${each.key}"
+  repository_force_delete           = true
   repository_read_write_access_arns = ["arn:aws:iam::745838912158:user/terraform-deployer"]
   repository_lifecycle_policy = jsonencode({
     rules = [
