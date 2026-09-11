@@ -51,9 +51,3 @@ resource "aws_ssm_parameter" "redis-url" {
   type  = "String"
   value = "redis://${aws_elasticache_replication_group.checkout.primary_endpoint_address}:${aws_elasticache_replication_group.checkout.port}"
 }
-
-resource "aws_ssm_parameter" "redis-test" {
-  name  = "/retail-store/${var.environment_name}/checkout/redis-test"
-  type  = "String"
-  value = "test"
-}
