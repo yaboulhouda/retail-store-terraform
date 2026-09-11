@@ -1,6 +1,6 @@
 name: "Terraform deploy"
 on:
-    pull_request:
+    workflow_dispatch:
 permissions:
     id-token: write
     contents: read
