@@ -5,12 +5,22 @@ permissions:
     id-token: write
     contents: read
     pull-requests: write
+
 jobs:
     plan:
+        environment: production
         runs-on: ubuntu-latest
         steps:
             - name: Git clone the repository
               uses: actions/checkout@v6
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v6.2.4
+              with:
+                  role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+                  aws-region: ${{ secrets.AWS_REGION_ID }}
+            - name: Additional steps
+              run: |
+                  aws sts get-caller-identity
             - name: Step Terraform
               uses: hashicorp/setup-terraform@v4
               with:
