@@ -1,5 +1,5 @@
 resource "aws_security_group" "rds-postgres-sg" {
-  name_prefix = "retail-store-rds-"
+  name_prefix = "retail-store-rds-${var.environment_name}-"
   vpc_id      = module.vpc.vpc_id
   ingress {
     from_port       = 5432
@@ -16,7 +16,7 @@ resource "aws_security_group" "rds-postgres-sg" {
 }
 
 resource "aws_security_group" "rds-mariadb-sg" {
-  name_prefix = "retail-store-rds-"
+  name_prefix = "retail-store-rds-${var.environment_name}-"
   vpc_id      = module.vpc.vpc_id
   ingress {
     from_port       = 3306
@@ -44,7 +44,7 @@ module "orders-postgres" {
   db_subnet_group_name   = module.vpc.database_subnet_group_name
   vpc_security_group_ids = [aws_security_group.rds-postgres-sg.id]
   instance_class         = "db.t4g.micro"
-  identifier             = "orders-postgres"
+  identifier             = "orders-postgres-${var.environment_name}"
 }
 
 module "catalog-mysql" {
@@ -58,5 +58,5 @@ module "catalog-mysql" {
   db_subnet_group_name   = module.vpc.database_subnet_group_name
   vpc_security_group_ids = [aws_security_group.rds-mariadb-sg.id]
   instance_class         = "db.t4g.micro"
-  identifier             = "catalog-mysql"
+  identifier             = "catalog-mysql-${var.environment_name}"
 }

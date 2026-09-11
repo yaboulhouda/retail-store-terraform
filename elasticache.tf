@@ -21,7 +21,7 @@ resource "aws_elasticache_subnet_group" "valkey" {
 }
 
 resource "aws_elasticache_replication_group" "checkout" {
-  replication_group_id = "checkout-valkey"
+  replication_group_id = "checkout-valkey-${var.environment_name}"
   description          = "Valkey cache for checkout"
 
   engine               = "valkey"

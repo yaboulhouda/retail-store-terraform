@@ -8,7 +8,7 @@ terraform {
   required_version = ">= 1.10"
 }
 provider "aws" {
-  region = "eu-north-1"
+  region = var.region
 
   default_tags {
     tags = {

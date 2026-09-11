@@ -30,6 +30,12 @@ variable "environment_name" {
   default     = "dev"
 }
 
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "eu-north-1"
+}
+
 variable "services" {
   type    = list(string)
   default = ["catalog", "cart", "orders", "checkout", "ui"]
