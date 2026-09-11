@@ -27,7 +27,7 @@ resource "aws_iam_role" "github_actions_terraform" {
           StringLike = {
             "token.actions.githubusercontent.com:sub" = [
               "repo:yaboulhouda@58434984/retail-store-terraform@1357171864:pull_request",
-              "repo:yaboulhouda@58434984/retail-store-terraform@1357171864:environment:production"
+              "repo:yaboulhouda@58434984/retail-store-terraform@1357171864:environment:*"
             ]
           }
         }
