@@ -25,7 +25,7 @@ variable "ecr_name" {
 }
 
 variable "environment_name" {
-  description = "Environment name used in resource names and tags"
+  description = "Environment name used in resources names and tags"
   type        = string
   default     = "dev"
 }

@@ -40,22 +40,24 @@ helm install external-secrets external-secrets/external-secrets \
 /!\ Créer le rôle IAM pour ESO
 kubectl describe pod -n external-secrets -l app.kubernetes.io/name=external-secrets | grep -A3 AWS_
 
-apiVersion: external-secrets.io/v1
-kind: ClusterSecretStore
-metadata:
-  name: aws-secrets-manager
-spec:
-  provider:
-    aws:
-      service: SecretsManager
-      region: eu-north-1
 
-apiVersion: external-secrets.io/v1
-kind: ClusterSecretStore
-metadata:
-  name: aws-parameter-store
-spec:
-  provider:
-    aws:
-      service: ParameterStore
-      region: eu-north-1
+kubectl apply -f clustersecretstore-parameterstore.yaml
+kubectl apply -f clustersecretstore-secretsmanager.yaml
+
+# Install ArgoCD
+
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm search repo argo/argo-cd --versions | head -5
+
+kubectl create namespace argocd
+
+helm install argocd argo/argo-cd \
+  --namespace argocd \
+  --version <version-vérifiée-à-l'étape-précédente>
+
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 -d
+
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+kubectl apply -f argocd/application.yaml
