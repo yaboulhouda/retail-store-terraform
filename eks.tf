@@ -93,3 +93,18 @@ resource "aws_eks_pod_identity_association" "cart_association" {
   service_account = "cart"
   role_arn        = aws_iam_role.cart.arn
 }
+
+resource "aws_eks_access_entry" "terraform_deployer" {
+  cluster_name  = module.eks.cluster_name
+  principal_arn = "arn:aws:iam::745838912158:user/terraform-deployer"
+}
+
+resource "aws_eks_access_policy_association" "terraform_deployer_admin" {
+  cluster_name  = module.eks.cluster_name
+  principal_arn = aws_eks_access_entry.terraform_deployer.principal_arn
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
+}
